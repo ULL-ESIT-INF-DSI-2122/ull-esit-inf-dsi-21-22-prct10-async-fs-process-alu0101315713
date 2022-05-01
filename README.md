@@ -1,6 +1,6 @@
 # Autor: Felipe Gómez Fuentes
 
-[![Coveralls](https://github.com/ULL-ESIT-INF-DSI-2122/ull-esit-inf-dsi-21-22-prct10-async-fs-process-alu0101315713/actions/workflows/coverall.yml/badge.svg)](https://github.com/ULL-ESIT-INF-DSI-2122/ull-esit-inf-dsi-21-22-prct10-async-fs-process-alu0101315713/actions/workflows/coverall.yml) [![Test](https://github.com/ULL-ESIT-INF-DSI-2122/ull-esit-inf-dsi-21-22-prct09-filesystem-notes-app-alu0101315713/actions/workflows/node.js.yml/badge.svg)](https://github.com/ULL-ESIT-INF-DSI-2122/ull-esit-inf-dsi-21-22-prct09-filesystem-notes-app-alu0101315713/actions/workflows/node.js.yml) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=ULL-ESIT-INF-DSI-2122_ull-esit-inf-dsi-21-22-prct10-async-fs-process-alu0101315713&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=ULL-ESIT-INF-DSI-2122_ull-esit-inf-dsi-21-22-prct10-async-fs-process-alu0101315713)
+[![Coveralls](https://github.com/ULL-ESIT-INF-DSI-2122/ull-esit-inf-dsi-21-22-prct10-async-fs-process-alu0101315713/actions/workflows/coverall.yml/badge.svg)](https://github.com/ULL-ESIT-INF-DSI-2122/ull-esit-inf-dsi-21-22-prct10-async-fs-process-alu0101315713/actions/workflows/coverall.yml) [![Test](https://github.com/ULL-ESIT-INF-DSI-2122/ull-esit-inf-dsi-21-22-prct10-async-fs-process-alu0101315713/actions/workflows/node.js.yml/badge.svg)](https://github.com/ULL-ESIT-INF-DSI-2122/ull-esit-inf-dsi-21-22-prct10-async-fs-process-alu0101315713/actions/workflows/node.js.yml) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=ULL-ESIT-INF-DSI-2122_ull-esit-inf-dsi-21-22-prct10-async-fs-process-alu0101315713&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=ULL-ESIT-INF-DSI-2122_ull-esit-inf-dsi-21-22-prct10-async-fs-process-alu0101315713)
 
 - [Autor: Felipe Gómez Fuentes](#autor-felipe-gómez-fuentes)
 - [0. Github Pages](#0-github-pages)
@@ -8,8 +8,10 @@
 - [2. Tareas Previas.](#2-tareas-previas)
 - [3. Para empezar.](#3-para-empezar)
 - [4. Ejercicios](#4-ejercicios)
-  - [4.1 - Clase Nota](#41---clase-nota)
-- [4.2 - Uso de yargs y chalk](#42---uso-de-yargs-y-chalk)
+  - [4.1 - Ejercicio 1](#41---ejercicio-1)
+- [4.2 - Ejercicio 2](#42---ejercicio-2)
+- [4.3 - Ejercicio 3](#43---ejercicio-3)
+- [4.4 - Ejercicio 4](#44---ejercicio-4)
 - [5. Conclusiones](#5-conclusiones)
 - [6. Bibliografía](#6-bibliografía)
 
@@ -47,242 +49,179 @@
 
 # 4. Ejercicios
 
-## 4.1 - Clase Nota
-- La clase Nota crea un objeto con los atributos que nos indica en enunciado: titulo, cuerpo y color, además, añadí un atributo extra id, que se puede poner o no, y que puede servir más adelante.
+## 4.1 - Ejercicio 1
+El programa que se propone en el enunciado recibe un fichero por escrito y genera un watcher. Éste revisa a tiempo real los cambios ocurridos en el fichero. Se usará el método access() del módulo fs, que sirve para comprobar los distintos estados posibles en el fichero. El comando F_OK nos ayudará para saber si el fichero existe o no.
+
+Para hacernos una idea, el programa funciona de esta manera:
+- Se comprueba si hay 3 argumentos, siendo el tercero el fichero
+  - Si no hay 3 argumentos, entra el console.log() a la pila de llamadas, se ejecuta y se finaliza el programa.
+  - Si se dan correctamente, se ejecuta el programa.
+- Entra access() a la pila de llamadas.
+- En caso de que haya un error (`'err' == true`), saldrá un el console.log() avisando de que el fichero no existe.
+  - Se ejecuta el console.log() dicho, que saldrá de la pila de llamadas.
+- En el caso contrario (`'err' == false`):
+  - Entra a la pila de llamadas el console.log() indicando que se va a observar el fichero. Se ejecuta y sale de la pila de llamadas.
+  - Entra también el watch().
+  - Entra también el console.log() que avisa de que el fichero no se observa. Se imprime por pantalla y sale de la pila de llamadas.
+  - watch() se dirige al registro de eventos.
+  - Cuando se modifique el fichero.
+  - watch() salta con el evento `change` y este pasa a la cola de manejadores.
+  - Entra en la pila de llamadas el console.log() que nos informa de que se ha cambiado el fichero. Se muestra por pantalla. Sale de la pila de llamadas.
+  - Repetirá lo mismo cada vez que se modifique el fichero.
+
+# 4.2 - Ejercicio 2
+
+- Para este ejercicio creé una clase Reader donde pido por atributos el nombre del fichero.
+
 ```ts
-private libroNotas: Nota[] = [];
-  constructor(
-        public titulo: string,
-        public cuerpo: string,
-        public color: string,
-        public id?: number,
-  ) {
-    this.saveNotas(this.libroNotas);
-  }
-```
-- Luego añadí funciones públicas para mayor comodidad a la hora de acceder los atributos:
-```ts
-  getTitulo(): string {
-    return this.titulo;
-  }
-  getCuerpo(): string {
-    return this.cuerpo;
-  }
-  getColor(): string {
-    return this.color;
-  }
-  getId(): number|undefined {
-    return this.id;
-  }
-  setTitulo(titulo: string): void {
-    this.titulo = titulo;
-  }
-  setCuerpo(cuerpo: string): void {
-    this.cuerpo = cuerpo;
-  }
-  setColor(color: string): void {
-    this.color = color;
-  }
-  setId(id: number): void {
-    this.id = id;
+/**
+ * Reader class, it has 2 methods, 1 using pipe and
+ * another one without it
+ */
+export class Reader {
+  /**
+   * @param file file to read
+   */
+  constructor(private file: string) {
   }
 ```
 
-- Además, hice los métodos `saveNotas`, `getNotas` y `deleteNota`, siendo éstos dos últimos métodos estáticos pars que no den problemas a la hora de recorrer arrays de objetos de tipo Nota:
-
+- Luego hice 2 métodos:
+- Méodo 1:
+  - Hago uso del método `pipe`. Primero creo los comandos `cat` y `grep` que piden en el enunciado con  el método `spawn`. En este método, la palabra que busco con el `grep` no la introduce el usuario. La idea principal es usar pipe para poder unir (si el usuario quisiera) ambos comandos, haciendo uso de `cat.stdout.pipe(grep.stdin);` en mi caso. Con un auxiliar voy recogiendo las palabras repetidas del grep y la línea en la que aparece, y luego lo imprimo con el método `on`.
 ```ts
-  saveNotas(notas: Nota[]): void {
-    notas.push(this);
+  /**
+   * it makes a cat and grep command using pipe
+   */
+  metodo1() {
+    const cat = spawn('cat', ['-n', this.file]);
+    const grep = spawn('grep', ['Hola']);
+    cat.stdout.pipe(grep.stdin);
+    let auxiliaryGrep: String = '';
+    grep.stdout.on('data', (piece) => {
+      auxiliaryGrep = piece.toString();
+    });
+    grep.on('close', () => {
+      console.log();
+      console.log(chalk.green('File Content:'));
+      console.log(auxiliaryGrep);
+    });
   }
-  static getNotas(notas: Nota[]): Nota[] {
-    return notas;
-  }
-  static deleteNota(nota: Nota): void {
-    const index = nota.libroNotas.indexOf(nota);
-    nota.libroNotas.splice(index, 1);
-  }
-```
-
-# 4.2 - Uso de yargs y chalk
-
-- Para añadir los comandos a la aplicación, hay que hacer uso de yargs. Como vamos a crear, leer, modificar y eliminar ficheros (en este caso de tipo JSON), también usaremos la librería fs.
-
-- De tal forma que, para el primer comando, se hizo de esta forma:
+  ```
+- Método 2:
+  - Aquí no hago uso del método pipe, por lo cual creo el comando de `cat` y `grep` directamente con un único spawn, hago el mismo auxiliar con el mismo uso para el `grep`, y aquí tuve más libertad para poder imprimir por pantalla el número de veces que aparece la palabra, que en mi caso obligué que sea `Hola`.
 ```ts
-import * as yargs from 'yargs';
-import * as fs from 'fs';
-import {Nota} from './notas';
-import chalk from 'chalk';
-
-yargs.command({
-  command: 'add',
-  describe: 'Add a new note',
-  builder: {
-    user: {
-      describe: 'User name',
-      demandOption: true,
-      type: 'string',
-    },
-    title: {
-      describe: 'Note title',
-      demandOption: true,
-      type: 'string',
-    },
-    body: {
-      describe: 'Note body',
-      demandOption: true,
-      type: 'string',
-    },
-    color: {
-      describe: 'Note color',
-      demandOption: true,
-      type: 'string',
-    },
-  },
-```
-- En esta parte, se puede ver que para el uso del comando, se hará del estilo `add --user="nombre usuario --title="titulo de la nota" --body="mensaje de la nota" --color="color de la nota"`. Además, la información de la descripción de cada atributo aparecerá al usar el comando `help` que ofrece yarg por defecto (también cuando se emplea erróneamente el comando). Por último, también sale el tipo de dato para cada atributo.
-
-```ts
-handler(argv) {
-    if (typeof argv.title === 'string' && typeof argv.body === 'string' &&
-    typeof argv.color === 'string' && typeof argv.user === 'string') {
-      // Required logic to add a new note
-      const nota = new Nota(argv.title, argv.body, argv.color);
-      if (`src/notas/${argv.user}/${argv.title}.json`) {
-        console.log(chalk.red(`src/notas/${argv.user}/${argv.title} already exists!`));
+  /**
+ * it makes a cat and grep command without pipe
+ */
+  metodo2() {
+    const catGrep = spawn('cat', [this.file, 'grep', 'Hola']);
+    let contador = 0;
+    let auxiliaryCatGrep = '';
+    catGrep.stdout.on('data', (piece) => {
+      auxiliaryCatGrep = piece.toString();
+    });
+    catGrep.on('close', () => {
+      console.log();
+      console.log(chalk.green('File Content:'));
+      console.log(auxiliaryCatGrep);
+      const result = auxiliaryCatGrep.split(/\s+/);
+      result.forEach((element) => {
+        if (element === 'Hola') {
+          contador++;
+        }
+      });
+      if (contador === 0) {
+        console.log();
+        console.log(chalk.red('No se encontró la palabra'));
       } else {
-        fs.mkdir(`src/notas/${argv.user}`, (err) => {
-          if (`src/notas/${argv.user}`) {
-            fs.writeFile(`src/notas/${argv.user}/${argv.title}.json`, JSON.stringify(nota), (err) => {
-              if (err) {
-                console.log(chalk.red(err));
-              } else {
-                console.log(chalk.green('Note added successfully'));
-              }
-            });
-          } else {
-            console.log(chalk.red(err));
-          }
-        });
+        console.log();
+        console.log(chalk.green('The word "Hola" appears ' + contador + ' times'));
       }
-    }
-  },
-});
-```
-- En esta otra parte del código para el `add` se recogen los atributos, se revisa el tipo de dato que se escribe, y creamos el objeto Nota con los atributos dados. Una vez creado se revisa si la nota ya existe, en caso de que ya exista, saldrá un mensaje en rojo `indicando que ya existe`. En caso contrario, crea el JSON haciendo uso de las funcines mkdir y writeFile propias de la librería fs. Con `mkdir` creamos el directorio para el usuario, en caso de que ya exista, no pasará nada. Una vez creado hacemos uso del writeFile para crear el archivo y escribir lo que el usuario quiera en forma de JSON.
+    });
+  }
+  ```
 
-- Para el resto de comandos, la parte de `yargs.command` es bastante similar, así que iremos viendo la parte de `handler(argv)` que es donde realmente varía el código.
+# 4.3 - Ejercicio 3
 
+- Para revisar los cambios que van a ir surgiendo dentro del fichero y de manera óptima, había que usar el método `watch()`, así que hice uso de `yargs` para dar más comodidad a la hora de añadir los comandos. Obligo a que escriba `watch` y luego que escriba la ruta donde se encuentre el archivo. Si se escriben bien los argumentos, que son 4, el comando node, el programa de node, el comando watch y el nombre del archivo, no saltará un mensaje de error, y se dispondrá a buscar la existencia del archivo con la función `F_OK`. Si pasa el control, ya estará dentor del fichero y a la espera de que surjan cambios. Aquí ya funciona exactamente igual que en el ejercicio 1.
 ```ts
-handler(argv) {
-    if (typeof argv.title === 'string' && typeof argv.user === 'string') {
-      // Required logic to remove a note
-      fs.unlink(`src/notas/${argv.user}/${argv.title}.json`, (err) => {
-        if (err) {
-          console.log(chalk.red('Something went wrong when writing your file'));
-        } else {
-          console.log(chalk.green('File removed successfully'));
-        }
-      });
-    }
+/**
+ * watch command, it sees if the file you ae looking forEach
+ * exists and has been changed or rename at any time
+ */
+yargs.command({
+  command: 'watch',
+  describe: 'watch a file',
+  builder: {
   },
-```
-
-- En este caso, el comando `remove` tiene como argumentos el nombre de usuario y el título de la nota. Con la función `unlink` eliminará el contenido seleccionado por argumento que se encuentre en el directorio. Esta función solo será útil si el directorio tiene contenido, por eso tanto en este comando como en todos, hago condiciones también para que en los errores salga un mensaje de error.
-
-```ts
-handler(argv) {
-    if (typeof argv.user === 'string') {
-      // Required logic to list all notes
-      fs.readdir(`src/notas/${argv.user}`, (err, files) => {
+  handler() {
+    if (process.argv.length !== 4) {
+      console.log(chalk.green('Entra'));
+      console.log(chalk.blue('node dist/ejercicio3/ejercicio-3.js watch [nombre archivo]'));
+    } else {
+      fs.access(process.argv[3], fs.constants.F_OK, (err) => {
         if (err) {
-          console.log(chalk.red('Something went wrong when reading your file'));
+          console.log(chalk.red('No existe el fichero'));
+          console.log(chalk.green('Escoja una nueva ruta'));
         } else {
-          console.log('List of notes:');
-          files.forEach((file) => {
-            fs.readFile(`src/notas/${argv.user}/${file}`, 'utf8', (err, data) => {
-              if (err) {
-                console.log(chalk.red(('Something went wrong when reading your file')));
-              } else {
-                const obj = JSON.parse(data.toString());
-                switch (obj.color) {
-                  case 'rojo':
-                    console.log(chalk.red(obj.titulo));
-                    break;
-                  case 'verde':
-                    console.log(chalk.green(obj.titulo));
-                    break;
-                  case 'azul':
-                    console.log(chalk.blue(obj.titulo));
-                    break;
-                  case 'amarillo':
-                    console.log(chalk.yellow(obj.titulo));
-                    break;
-                  // default:
-                  //   console.log(obj.titulo);
-                }
-              }
-            });
-          });
-        }
-      });
-    }
-  },
-```
-
-- Para el comando `list`, solo busco el nombre del usuario, con esta información hago uso de la función `readdir` para leer el directorio, y un forEach para revisar todos los ficheros del directorio (que siempre tendrá el nombre del usuario) con la función ``readFile`, que junto a un switch que revisa el atributo "color" de cada nota, indico haciendo uso de chalk el nombre de cada archivo del color que tenga como atributo. Encaso de existir algún error, saldrá un aviso en rojo.
-
-```ts
-  handler(argv) {
-    if (typeof argv.title === 'string' && typeof argv.user === 'string') {
-      // Required logic to read a note
-      fs.readFile(`src/notas/${argv.user}/${argv.title}.json`, (err, data) => {
-        const obj = JSON.parse(data.toString());
-        if (err) {
-          console.log(chalk.red('Something went wrong when reading your file'));
-        } else {
-          console.log(chalk.green('El mensaje de la nota es:'));
-          console.log(obj.cuerpo);
-        }
-      });
-    }
-  },
-```
-
-- Para el comando read, pido el nombre de usuario y el título de la nota, para poder hacer uso de `readFile` en las notas y así mostrar el contenido de la nota. En caso de error, saldrá un mensaje indicándolo.
-
-```ts
-handler(argv) {
-    if (typeof argv.title === 'string' && typeof argv.body === 'string' &&
-    typeof argv.color === 'string' && typeof argv.user === 'string') {
-      // Required logic to modify a note
-      fs.readFile(`src/notas/${argv.user}/${argv.title}.json`, 'utf8', (err, data) => {
-        if (err) {
-          console.log(chalk.red('Something went wrong when reading your file'));
-        } else {
-          const obj = JSON.parse(data.toString());
-          obj.cuerpo = argv.body;
-          obj.color = argv.color;
-          fs.writeFile(`src/notas/${argv.user}/${argv.title}.json`, JSON.stringify(obj), (err) => {
-            if (err) {
-              console.log(chalk.red('Something went wrong when writing your file'));
-            } else {
-              console.log(chalk.green('Note modified successfully'));
+          fs.watch(process.argv[3], (eventType, filename) => {
+            if (eventType === 'change') {
+              console.clear();
+              console.log(chalk.green('Fichero modificado: ' + filename));
+            } else if (eventType === 'rename') {
+              console.clear();
+              console.log(chalk.green('File renombrado: ' + filename));
             }
           });
         }
       });
     }
   },
+});
 ```
 
-- Para el comando modify, se piden todos los atributos se hace uso de la función `readFile`, se comprueba si existe, en caso de que no, slata un mensaje de error, en cas ode que sí, se guarda el objeto del JSON y se reescriben los atributos que le pasa el usuario, que solo pueden ser el mensaje y el color, por último se hace uso de `writeFile` y se escribe.
+# 4.4 - Ejercicio 4
 
-- **Por último, para que los comandos funcionen, se debe de escribir esta línea:**
+- En este ejercicio, como en todos, cumplo los principios SOLID, pero en [este ejercicio](src/ejercicio4/) se nota bastante. Tengo los comandos en la carpeta [comandos](src/ejercicio4/comandos/), donde en cada fichero hay un comando que se nos pide en el enunciado: 
+1. Dada una ruta concreta, mostrar si es un directorio o un fichero.
+2. Crear un nuevo directorio a partir de una nueva ruta que recibe como parámetro.
+3. Listar los ficheros dentro de un directorio.
+4. Mostrar el contenido de un fichero (similar a ejecutar el comando cat).
+5. Borrar ficheros y directorios.
+6. Mover y copiar ficheros y/o directorios de una ruta a otra. Para este caso, la aplicación recibirá una ruta origen y una ruta destino. En caso de que la ruta origen represente un directorio, se debe copiar dicho directorio y todo su contenido a la **ruta destino**.
+
+- Al hacer uso de **wrapper**, se simplifica muchísimo el código, cada comando viene implementado por una interfaz que creo [aquí](src/ejercicio4/comandos/interfaces.ts). Cada comando estará dentro de un yargs, y dentro de un método de una clase distinta. Todos los objetos se crearán dentro de una [app](src/ejercicio4/app.ts) donde se ejecutará la app por completo:
 ```ts
-yargs.parse();
-```
 
+import * as yargs from 'yargs';
+import {LScommand} from './comandos/lscommand';
+import {MKDIRcommand} from './comandos/mkdircommand';
+import {LSFILEScommand} from './comandos/lsfilescommand';
+import {CATcommand} from './comandos/catcommand';
+import {RMcommand} from './comandos/rmcommand';
+import {MVcommand} from './comandos/mvcommand';
+import {CPcommand} from './comandos/cpcommand';
+
+const ls = new LScommand();
+const mkdir = new MKDIRcommand();
+const lsfiles = new LSFILEScommand();
+const cat = new CATcommand();
+const rm = new RMcommand();
+const mv = new MVcommand();
+const cp = new CPcommand();
+
+ls.ls();
+mkdir.mkdir();
+lsfiles.lsfiles();
+cat.cat();
+rm.rm();
+mv.mv();
+cp.cp();
+
+yargs.parse();
+
+```
 # 5. Conclusiones
 
 - Los ejercicios han servido como repaso sobre cómo usar las funciones de las strings, el uso de los arrays, tuplas y los enumerados en TypeScript. Hay que tener en cuenta que, para las pruebas TDD, primero hay que tener bien instalado Mocha y Chai, y bien escrito el archivo `.mocharc.json`, que siguiendo este [vídeo](https://drive.google.com/file/d/1-z1oNOZP70WBDyhaaUijjHvFtqd6eAmJ/view) tendría que quedar algo similar o igual a [esto](./.mocharc.json).
@@ -292,24 +231,19 @@ yargs.parse();
 
 - También es interesante el uso de la herramienta Coverall que nos informa los archivos con código fuente en Typescript que se han analizado y que se sacan del fichero [.mocharc.json](./.mocharc.json). Coverall nos indica el cubrimiento que le damos a las funciones, la líneas que no están cubiertas y cuánto % se cubre de las sentencias y las ramas. Para saber instalarlo una buena opción es ver este [vídeo](https://drive.google.com/file/d/1xLDc4CpoYpsAlCFO_4DMwu7MKCtcZDnh/view).
 
-- En mi caso Coveralls me da un resultado que se puede consultar entrando en este 94.44%.
-```ts
---
-All files |   94.44 |      100 |   91.66 |   94.44 |
- notas.ts |   94.44 |      100 |   91.66 |   94.44 | 35
-----------|---------|----------|---------|---------|-------------------
-```
 
-- Otro factor bastante importante fue hacer uso de los [Principios SOLID](https://ull-esit-inf-dsi-2122.github.io/typescript-theory/typescript-solid.html), que fue clave para hacer clases específicas pra métodos específicos, estos principios se usaron en toda la práctica, por ejemplo, en [nota](./src/notas.ts).
+- Otro factor bastante importante fue hacer uso de los [Principios SOLID](https://ull-esit-inf-dsi-2122.github.io/typescript-theory/typescript-solid.html), que fue clave para hacer clases específicas pra métodos específicos, estos principios se usaron en toda la práctica, por ejemplo, en [este ejercicio](src/ejercicio4/).
 
 - La librería fs ha sido bastante clave para poder manejar los ficheros de manera asíncrona, como se ha explicado en los puntos anteriores.
+
+- Wrapper ha servido de mucho para optimizar código en menos líneas y hacer que sea más legible
 
 - Se puede observar que se ha usado las funciones de chalk para imprimir mensajes de colores en todas las funciones. Saldrá verde en caso de que se ejecute correctamente, en rojo de que haya algún fallo, y en el caso del comando `list`, si se ejecuta correctamente, saldrá el nombre de la(s) nota(s) del color que tengan como atributo.
 
 - Para poder hacer buen uso del SonarCloud, tuvo que ser necesario **no usar** la última versión de node (18.0.0), sino que tuve que usar la versión `17.7.2`. De esta forma se pudo realizar tanto las pruebas de Coveralls como el scanner de SonarCloud correctamente.
 
 # 6. Bibliografía
-1. [Enunciado Práctica 5](https://ull-esit-inf-dsi-2122.github.io/prct09-filesystem-notes-app/)
+1. [Enunciado Práctica 10](https://ull-esit-inf-dsi-2122.github.io/prct10-async-fs-process/)
 2. [Introducción a Markdown](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax)
 3. [Recurso sobre GitHub Pages](https://docs.github.com/en/pages)
 4. [Página web de Jekyll](https://jekyllrb.com/)
@@ -325,3 +259,4 @@ All files |   94.44 |      100 |   91.66 |   94.44 |
 14. [Principios SOLID](https://ull-esit-inf-dsi-2122.github.io/typescript-theory/typescript-solid.html)
 15. [yargs](https://www.npmjs.com/package/yargs)
 16. [chalk](https://www.npmjs.com/package/chalk)
+17. [API asíncrona de Node](https://nodejs.org/dist/latest-v18.x/docs/api/child_process.html#asynchronous-process-creation)
