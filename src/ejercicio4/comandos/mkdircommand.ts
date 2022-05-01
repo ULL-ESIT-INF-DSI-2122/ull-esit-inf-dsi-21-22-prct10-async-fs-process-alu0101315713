@@ -4,7 +4,9 @@ import {spawn} from 'child_process';
 import * as fs from 'fs';
 
 import {mkdirInterface} from './interfaces';
-
+/**
+ * mkdir command, create a directory
+ */
 export class MKDIRcommand implements mkdirInterface {
   constructor() {}
   mkdir() {

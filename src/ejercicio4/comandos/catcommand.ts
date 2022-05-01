@@ -4,7 +4,9 @@ import {spawn} from 'child_process';
 import * as fs from 'fs';
 
 import {catInterface} from './interfaces';
-
+/**
+ * cat command, show the content of a file
+ */
 export class CATcommand implements catInterface {
   constructor() {}
   cat() {

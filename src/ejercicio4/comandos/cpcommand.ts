@@ -4,7 +4,9 @@ import {spawn} from 'child_process';
 import * as fs from 'fs';
 
 import {cpInterface} from './interfaces';
-
+/**
+ * cp command, copy a file and move it to another place
+ */
 export class CPcommand implements cpInterface {
   constructor() {}
   cp() {

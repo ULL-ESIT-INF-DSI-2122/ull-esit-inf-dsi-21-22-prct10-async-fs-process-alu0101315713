@@ -4,7 +4,9 @@ import {spawn} from 'child_process';
 import * as fs from 'fs';
 
 import {listFilesInterface} from './interfaces';
-
+/**
+ * listFiles command, list only the files
+ */
 export class LSFILEScommand implements listFilesInterface {
   constructor() {}
   lsfiles() {

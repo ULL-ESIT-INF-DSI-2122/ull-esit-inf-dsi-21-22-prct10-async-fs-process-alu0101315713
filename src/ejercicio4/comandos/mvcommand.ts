@@ -4,7 +4,9 @@ import {spawn} from 'child_process';
 import * as fs from 'fs';
 
 import {mvinterface} from './interfaces';
-
+/**
+ * mv command, move a file or directory into another place
+ */
 export class MVcommand implements mvinterface {
   constructor() {}
   mv() {

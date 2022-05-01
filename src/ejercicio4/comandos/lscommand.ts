@@ -4,7 +4,9 @@ import chalk from 'chalk';
 import {spawn} from 'child_process';
 
 import {lsInterface} from './interfaces';
-
+/**
+ * ls command, list files and directories
+ */
 export class LScommand implements lsInterface {
   constructor() {}
   ls() {

@@ -4,7 +4,9 @@ import {spawn} from 'child_process';
 import * as fs from 'fs';
 
 import {rmInterface} from './interfaces';
-
+/**
+ * rm command, remove a file or directory
+ */
 export class RMcommand implements rmInterface {
   constructor() {}
   rm() {
