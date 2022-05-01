@@ -1,16 +1,19 @@
 import chalk from 'chalk';
 import * as yargs from 'yargs';
 import * as fs from 'fs';
-
+/**
+ * watch command, it sees if the file you ae looking forEach
+ * exists and has been changed or rename at any time
+ */
 yargs.command({
-  command: 'route',
-  describe: 'Route a file',
+  command: 'watch',
+  describe: 'watch a file',
   builder: {
   },
   handler() {
     if (process.argv.length !== 4) {
       console.log(chalk.green('Entra'));
-      console.log(chalk.yellow('node dist/ejercicio3/ejercicio-3.js route <path>'));
+      console.log(chalk.blue('node dist/ejercicio3/ejercicio-3.js watch [nombre archivo]'));
     } else {
       fs.access(process.argv[3], fs.constants.F_OK, (err) => {
         if (err) {
