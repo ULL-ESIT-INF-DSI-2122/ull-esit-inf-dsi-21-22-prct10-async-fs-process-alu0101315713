@@ -4,7 +4,7 @@
 
 - [Autor: Felipe Gómez Fuentes](#autor-felipe-gómez-fuentes)
 - [0. Github Pages](#0-github-pages)
-- [1. Práctica 9 - Sistema de ficheros y creación de procesos en Node.js.](#1-práctica-9---sistema-de-ficheros-y-creación-de-procesos-en-nodejs)
+- [1. Práctica 10 - Sistema de ficheros y creación de procesos en Node.js](#1-práctica-10---sistema-de-ficheros-y-creación-de-procesos-en-nodejs)
 - [2. Tareas Previas.](#2-tareas-previas)
 - [3. Para empezar.](#3-para-empezar)
 - [4. Ejercicios](#4-ejercicios)
@@ -18,7 +18,7 @@
 # 0. Github Pages
 - Si desea verlo en Pages, consulte [aquí](https://ull-esit-inf-dsi-2122.github.io/ull-esit-inf-dsi-21-22-prct09-filesystem-notes-app-alu0101315713/).
 
-# 1. Práctica 9 - Sistema de ficheros y creación de procesos en Node.js.
+# 1. Práctica 10 - Sistema de ficheros y creación de procesos en Node.js
 - En este [repositorio](https://github.com/ULL-ESIT-INF-DSI-2122/ull-esit-inf-dsi-21-22-prct10-async-fs-process-alu0101315713) donde haré un resumen haciendo una descripción de todos los pasos para el procedimiento de esta práctica. La práctica consiste en hacer una serie de ejercicios siguiendo la [estructura básica de proyecto](https://ull-esit-inf-dsi-2122.github.io/typescript-theory/typescript-project-setup.html) que se vio en clase, incluyendo todos los dichos archivos en el directorio [src](src/) que contiene las soluciones de los ejercicios.
 
 # 2. Tareas Previas.
