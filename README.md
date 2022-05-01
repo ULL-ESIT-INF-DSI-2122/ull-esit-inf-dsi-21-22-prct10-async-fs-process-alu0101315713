@@ -4,10 +4,10 @@
 
 - [Autor: Felipe Gómez Fuentes](#autor-felipe-gómez-fuentes)
 - [0. Github Pages](#0-github-pages)
-- [1. Práctica 9 - Aplicación de procesamiento de notas de texto.](#1-práctica-9---aplicación-de-procesamiento-de-notas-de-texto)
+- [1. Práctica 9 - Sistema de ficheros y creación de procesos en Node.js.](#1-práctica-9---sistema-de-ficheros-y-creación-de-procesos-en-nodejs)
 - [2. Tareas Previas.](#2-tareas-previas)
 - [3. Para empezar.](#3-para-empezar)
-- [4. Aplicación](#4-aplicación)
+- [4. Ejercicios](#4-ejercicios)
   - [4.1 - Clase Nota](#41---clase-nota)
 - [4.2 - Uso de yargs y chalk](#42---uso-de-yargs-y-chalk)
 - [5. Conclusiones](#5-conclusiones)
@@ -16,11 +16,11 @@
 # 0. Github Pages
 - Si desea verlo en Pages, consulte [aquí](https://ull-esit-inf-dsi-2122.github.io/ull-esit-inf-dsi-21-22-prct09-filesystem-notes-app-alu0101315713/).
 
-# 1. Práctica 9 - Aplicación de procesamiento de notas de texto.
-- En este [repositorio](https://github.com/ULL-ESIT-INF-DSI-2122/ull-esit-inf-dsi-21-22-prct09-filesystem-notes-app-alu0101315713) donde haré un resumen haciendo una descripción de todos los pasos para el procedimiento de esta práctica. La práctica consiste en hacer una serie de ejercicios siguiendo la [estructura básica de proyecto](https://ull-esit-inf-dsi-2122.github.io/typescript-theory/typescript-project-setup.html) que se vio en clase, incluyendo todos los dichos archivos en el directorio [src](src/) que contiene la aplicación.
+# 1. Práctica 9 - Sistema de ficheros y creación de procesos en Node.js.
+- En este [repositorio](https://github.com/ULL-ESIT-INF-DSI-2122/ull-esit-inf-dsi-21-22-prct10-async-fs-process-alu0101315713) donde haré un resumen haciendo una descripción de todos los pasos para el procedimiento de esta práctica. La práctica consiste en hacer una serie de ejercicios siguiendo la [estructura básica de proyecto](https://ull-esit-inf-dsi-2122.github.io/typescript-theory/typescript-project-setup.html) que se vio en clase, incluyendo todos los dichos archivos en el directorio [src](src/) que contiene las soluciones de los ejercicios.
 
 # 2. Tareas Previas.
-- Para empezar es necesario realizar antes una serie de tareas previas que nos van a permitir tener las bases para poder configurar un entorno de trabajo adecuado de cara a la realización del informe, por ejemplo haber realizado la Práctica 1, que puede revisar [aquí](https://ull-esit-inf-dsi-2122.github.io/ull-esit-inf-dsi-21-22-prct01-iaas-alu0101315713/), tener leído y aprendido los conocimientos necesarios sobre [Markdown](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax), [Jekyll](https://jekyllrb.com/) y [GitHub Pages](https://lab.github.com/githubtraining/github-pages), además de la lectura de los tutoriales [sobre los métodos que puede utilizar con string](https://www.w3schools.com/js/js_string_methods.asp) y sobre [expresiones regulares en JavaScript](https://www.w3schools.com/js/js_regexp.asp), los [apuntes de Arrays, tuplas y enumerados](https://ull-esit-inf-dsi-2122.github.io/typescript-theory/typescript-arrays-tuples-enums.html), los [apuntes de Objetos, clases e interfaces](https://ull-esit-inf-dsi-2122.github.io/typescript-theory/typescript-objects-classes-interfaces.html) documentación en [Typedoc](https://typedoc.org/), hacer pruebas unitarias con [Mocha](https://mochajs.org/), [Chai](https://www.chaijs.com/), [Coveralls](https://coveralls.io/) para la correcta elaboración del mismo y [Principios SOLID](https://ull-esit-inf-dsi-2122.github.io/typescript-theory/typescript-solid.html) para escribir código más limpio. A continuación se mostrará una tabla con las tareas previas realizadas (en mi caso):
+- Para empezar es necesario realizar antes una serie de tareas previas que nos van a permitir tener las bases para poder configurar un entorno de trabajo adecuado de cara a la realización del informe, por ejemplo haber realizado la Práctica 1, que puede revisar [aquí](https://ull-esit-inf-dsi-2122.github.io/ull-esit-inf-dsi-21-22-prct01-iaas-alu0101315713/), tener leído y aprendido los conocimientos necesarios sobre [Markdown](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax), [Jekyll](https://jekyllrb.com/) y [GitHub Pages](https://lab.github.com/githubtraining/github-pages), además de la lectura de los tutoriales [sobre los métodos que puede utilizar con string](https://www.w3schools.com/js/js_string_methods.asp) y sobre [expresiones regulares en JavaScript](https://www.w3schools.com/js/js_regexp.asp), los [apuntes de Arrays, tuplas y enumerados](https://ull-esit-inf-dsi-2122.github.io/typescript-theory/typescript-arrays-tuples-enums.html), los [apuntes de Objetos, clases e interfaces](https://ull-esit-inf-dsi-2122.github.io/typescript-theory/typescript-objects-classes-interfaces.html) documentación en [Typedoc](https://typedoc.org/), hacer pruebas unitarias con [Mocha](https://mochajs.org/), [Chai](https://www.chaijs.com/), [Coveralls](https://coveralls.io/) para la correcta elaboración del mismo, entender la [API asíncrona para cear procesos](https://nodejs.org/dist/latest-v18.x/docs/api/child_process.html#asynchronous-process-creation) y [Principios SOLID](https://ull-esit-inf-dsi-2122.github.io/typescript-theory/typescript-solid.html) para escribir código más limpio. A continuación se mostrará una tabla con las tareas previas realizadas (en mi caso):
 
 | Tareas Previas Realizadas.|
 | ----- |
@@ -43,9 +43,9 @@
 
 
 # 3. Para empezar.
-- Los ejercicios deben de cumplir la [estructura básica de proyecto](https://ull-esit-inf-dsi-2122.github.io/typescript-theory/typescript-project-setup.html) mencionada anteriormente, e incluiremos la aplicación en el directorio [./src](src/). Una vez instaladas las dependencias de Mocha, Chai, Coveralls, TypeDoc, node, yargs y chalk se deberá de hacer la documentación de TypeDoc en la carpeta [./docs](docs/) y la metodología TDD en la carpeta [./tests](tests/).
+- Los ejercicios deben de cumplir la [estructura básica de proyecto](https://ull-esit-inf-dsi-2122.github.io/typescript-theory/typescript-project-setup.html) mencionada anteriormente, e incluiremos los ejercicios en el directorio [./src](src/) haciendo uso de la metodología SOLID. Una vez instaladas las dependencias de Mocha, Chai, Coveralls, TypeDoc, node, yargs y chalk se deberá de hacer la documentación de TypeDoc en la carpeta [./docs](docs/) y la metodología TDD en la carpeta [./tests](tests/).
 
-# 4. Aplicación
+# 4. Ejercicios
 
 ## 4.1 - Clase Nota
 - La clase Nota crea un objeto con los atributos que nos indica en enunciado: titulo, cuerpo y color, además, añadí un atributo extra id, que se puede poner o no, y que puede servir más adelante.
